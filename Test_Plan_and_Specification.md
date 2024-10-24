@@ -19,7 +19,7 @@ All tests were run using Jest and passed successfully. The app is stable and rea
 The app will be tested both manually and automatically:
 
 - **Manual Testing**: The user interface will be tested by performing specific tasks, e.g., starting a new puzzle, using solver functions, and providing hints.
-- **Automated Testing**: Unit tests for the Sudoku solver and functionalities directly tied to the module.
+- **Automated Testing**: Unit tests with Jest framework for the Sudoku solver and functionalities directly tied to the module.
 - **Negative Testing**: Error handling will be tested by inputting invalid values or performing illogical actions.
 
 ## Test Specification
