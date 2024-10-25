@@ -2,7 +2,7 @@
 Could add options for different hint types like the easiest move, a specific cell, or the easiest 3x3 box. */
 
 import React, { Component } from 'react'
-import SudokuService from '../services/SudokuService' // Import the service that provides puzzle hints
+import SudokuService from '../services/SudokuService.js' // Import the service that provides puzzle hints
 import '../styles/HintButton.css' // Import styles specific to the Hint Button
 
 /**
@@ -18,6 +18,9 @@ class HintButton extends Component {
   constructor (props) {
     super(props)
 
+    // Create an instance of SudokuService
+    this.sudokuService = new SudokuService()
+
     // Bind the event handler to the class
     this.generateHint = this.generateHint.bind(this)
   }
@@ -27,7 +30,16 @@ class HintButton extends Component {
    * If a hint is available, updates the grid state via the parent component.
    */
   generateHint () {
-    this.#generateHintForUser()
+    console.log('SudokuService:', this.sudokuService) // Show the instance
+    console.log('getHint method:', this.sudokuService.getHint) // Should be a function
+
+    if (typeof this.sudokuService.getHint === 'function') {
+      this.#generateHintForUser()
+    } else {
+      console.error('getHint is not a function')
+    }
+
+    // this.#generateHintForUser()
   }
 
   /* Private methods */
@@ -39,7 +51,7 @@ class HintButton extends Component {
    * @private
    */
   #generateHintForUser () {
-    const hint = SudokuService.getHint(this.props.grid) // Get a hint based on the current grid state
+    const hint = this.sudokuService.getHint(this.props.grid)
 
     // If a hint is available, pass it to the parent component
     if (hint) {

@@ -76,10 +76,8 @@ class PuzzleBoard extends Component {
    * @private
    */
   #generateNewPuzzle (difficulty) {
-    // Use the instance of SudokuService to generate a new puzzle
+    // Use the instance of SudokuService to generate a new puzzle.
     const newPuzzle = this.sudokuService.generatePuzzle(difficulty)
-    // const sudokuService = new SudokuService()
-    // const newPuzzle = sudokuService.generatePuzzle(difficulty)
     this.setState({
       grid: newPuzzle,
       originalGrid: JSON.parse(JSON.stringify(newPuzzle)) // Store the initially generated grid as a deep copy to prevent modifications and to avoid referencing issues.
@@ -102,11 +100,6 @@ class PuzzleBoard extends Component {
     // Only consider it solved if both complete and valid.
     const isSolved = isComplete && isValid
     this.setState({ isCompleted: isSolved })
-
-    // Use the instance of SudokuService to validate the grid
-    // const isSolved = this.sudokuService.validateGrid(this.state.grid)
-    // const isSolved = SudokuService.validateGrid(this.state.grid)
-    // this.setState({ isCompleted: isSolved })
 
     if (isSolved) {
       alert('Congratulations! Puzzle solved.')

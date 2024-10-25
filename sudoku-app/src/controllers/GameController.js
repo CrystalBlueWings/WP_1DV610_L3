@@ -17,6 +17,7 @@ class GameController {
     // Initialize game state variables.
     this.puzzle = new Puzzle() // Instance of the Puzzle model to manage the grid.
     this.validator = new Validator() // Validator instance to validate puzzle states.
+    this.sudokuService = new SudokuService()
   }
 
   /**
@@ -92,7 +93,7 @@ class GameController {
    * @private
    */
   #generateNewPuzzleInternal (difficulty) {
-    const generatedGrid = SudokuService.generatePuzzle(difficulty) // Generate grid using the service.
+    const generatedGrid = this.sudokuService.generatePuzzle(difficulty) // Generate grid using the service.
     this.puzzle.setGrid(generatedGrid) // Update the puzzle model with the generated grid.
   }
 
@@ -127,7 +128,7 @@ class GameController {
    * @private
    */
   #solvePuzzleInternal () {
-    const solvedGrid = SudokuService.solvePuzzle(this.puzzle.getGrid()) // Solve the grid using the service.
+    const solvedGrid = this.sudokuService.solvePuzzle(this.puzzle.getGrid()) // Solve the grid using the service.
     if (solvedGrid) {
       this.puzzle.setGrid(solvedGrid) // Update the puzzle with the solved grid.
     }
@@ -141,7 +142,7 @@ class GameController {
    * @private
    */
   #getHintInternal () {
-    return SudokuService.getHint(this.puzzle.getGrid()) // Fetch a hint using the service.
+    return this.sudokuService.getHint(this.puzzle.getGrid()) // Fetch a hint using the service.
   }
 
   /**

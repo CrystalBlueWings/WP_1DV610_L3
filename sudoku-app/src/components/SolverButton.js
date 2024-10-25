@@ -3,7 +3,7 @@ For now, only implement a button to solve the entire grid.
 Add more buttons later. */
 
 import React, { Component } from 'react'
-import SudokuService from '../services/SudokuService' // Import the service that handles puzzle solving
+import SudokuService from '../services/SudokuService.js' // Import the service that handles puzzle solving
 import '../styles/SolverButton.css' // Import styles specific to the Solver Button
 
 /**
@@ -18,6 +18,9 @@ class SolverButton extends Component {
    */
   constructor (props) {
     super(props)
+
+    // Create an instance of SudokuService
+    this.sudokuService = new SudokuService()
 
     // Bind the event handler to the class
     this.solvePuzzle = this.solvePuzzle.bind(this)
@@ -41,7 +44,7 @@ class SolverButton extends Component {
    * @private
    */
   #solveCurrentPuzzle () {
-    const solvedGrid = SudokuService.solvePuzzle(this.props.grid) // Attempt to solve the grid
+    const solvedGrid = this.sudokuService.solvePuzzle(this.props.grid) // Attempt to solve the grid
 
     // If the solution is found, update the grid via the parent component
     if (solvedGrid) {
