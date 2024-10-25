@@ -1,6 +1,3 @@
-/* Handles game state, manages interactions between the UI and the Puzzle model, and uses Validator for validation.
-This class will act as the central manager for the game's state and user interactions. */
-
 import Puzzle from '../models/Puzzle.js'
 import Validator from '../utils/Validator.js'
 import SudokuService from '../services/SudokuService.js' // To generate, solve, and provide hints
@@ -38,7 +35,6 @@ class GameController {
    */
   updateCellValue (row, col, value) {
     this.#updateCellValueInternal(row, col, value)
-    console.log('Updated Grid State in GameController:', this.getGrid()) // Log updated grid
   }
 
   /**
@@ -84,11 +80,7 @@ class GameController {
    * @returns {number[][]} - The current state of the grid.
    */
   getGrid () {
-    const currentGrid = this.#getGridInternal()
-    console.log('GameController - Current Grid:', currentGrid) // Log the current grid
-    return currentGrid
-
-    // return this.#getGridInternal()
+    return this.#getGridInternal()
   }
 
   /**
@@ -118,8 +110,6 @@ class GameController {
    */
   #generateNewPuzzleInternal (difficulty) {
     const generatedGrid = this.sudokuService.generatePuzzle(difficulty) // Generate grid using the service.
-    console.log('Generated New Puzzle:', generatedGrid) // Log the new puzzle.
-
     this.puzzle.setGrid(generatedGrid) // Update the puzzle model with the generated grid.
     this.puzzle.setOriginalGrid(generatedGrid) // Update the puzzle model with the original grid.
   }
@@ -135,8 +125,6 @@ class GameController {
    */
   #updateCellValueInternal (row, col, value) {
     this.puzzle.updateCell(row, col, value) // Delegate to the Puzzle model to update the grid.
-
-    console.log(`Updated cell [${row}, ${col}] with value: ${value}`)
   }
 
   /**

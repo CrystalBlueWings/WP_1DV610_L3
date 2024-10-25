@@ -1,6 +1,3 @@
-/* Represents the core model for a Sudoku puzzle, encapsulating the puzzle grid and related operations.
-This class encapsulates the puzzle's state, including the grid data and its operations. */
-
 /**
  * Puzzle class - Represents the core model for a Sudoku puzzle.
  */

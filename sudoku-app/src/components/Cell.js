@@ -1,6 +1,3 @@
-/* This component is responsible for rendering each cell of the Sudoku grid.
-It will handle validation to ensure only numbers 1-9 can be entered. */
-
 import React, { Component } from 'react'
 import '../styles/Cell.css' // Import styles specific to each cell
 

@@ -91,7 +91,6 @@ class SudokuService {
       return puzzleGrid
     } catch (error) {
       console.error('Error generating Sudoku puzzle:', error)
-      // return Array(9).fill(Array(9).fill(null)) // Return an empty 9x9 grid in case of error.
       return Array.from({ length: 9 }, () => Array(9).fill(null)) // Return an empty 9x9 grid in case of error.
     }
   }
@@ -153,12 +152,6 @@ class SudokuService {
 
       // Use the HintGenerator to get a hint for the next step.
       const hintCell = hintGenerator.getCellsWithFewestCandidates(1)[0]
-
-      // // Check if the grid has a valid structure.
-      // if (!this.#isValidGridStructure(grid)) {
-      //   console.error('Invalid grid structure:', grid)
-      //   return null
-      // }
 
       // If a hint is available, return the suggested row, column, and value.
       if (hintCell && hintCell.candidates.length > 0) {

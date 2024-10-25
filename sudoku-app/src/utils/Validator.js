@@ -1,6 +1,3 @@
-/* Contains validation logic to check if the Sudoku grid adheres to game rules.
-This class handles validation logic to determine if the current grid adheres to Sudoku rules. */
-
 /**
  * Validator class - Handles validation logic for a Sudoku puzzle.
  * This class includes methods to validate rows, columns, and 3x3 subgrids in a Sudoku grid.

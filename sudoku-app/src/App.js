@@ -38,9 +38,6 @@ class App extends Component {
       originalGrid: this.gameController.getOriginalGrid(),
       isCompleted: false // Track if the puzzle is complete.
     }
-
-    // Log the grid to ensure it's properly initialized.
-    console.log('Initial Grid State (App.js):', this.state.grid) // Log the initial grid.
   }
 
   /**
@@ -53,7 +50,6 @@ class App extends Component {
    */
   handleCellChange (row, col, value) {
     this.#updateCellValue(row, col, value)
-    console.log('Updated Grid State:', this.state.grid) // Log the updated grid
   }
 
   /**
@@ -65,8 +61,6 @@ class App extends Component {
    * @param {number} value - The hint value to set.
    */
   handleHint (row, col, value) {
-    // this.#applyHint(row, col, value)
-
     const hint = this.gameController.getHint()
     if (hint) {
       this.#applyHint(hint.row, hint.col, hint.value)
@@ -119,10 +113,6 @@ class App extends Component {
   #updateCellValue (row, col, value) {
     this.gameController.updateCellValue(row, col, value) // Update the cell in the GameController.
     this.setState({ grid: this.gameController.getGrid() }) // Update the grid state.
-
-    // const updatedGrid = this.gameController.getGrid()
-    // console.log('Updated Grid after cell change:', updatedGrid) // Log the updated grid.
-    // this.setState({ grid: updatedGrid }) // Update the grid state.
   }
 
   /**
@@ -135,11 +125,6 @@ class App extends Component {
    */
   #applyHint (row, col, value) {
     this.gameController.updateCellValue(row, col, value) // Update the cell with the hint.
-
-    // const updatedGrid = this.gameController.getGrid()
-    // console.log('Updated Grid after hint:', updatedGrid) // Log the updated grid.
-    // this.setState({ grid: updatedGrid }) // Update the grid state.
-
     this.setState({ grid: this.gameController.getGrid() }) // Update the grid state.
   }
 
@@ -183,7 +168,6 @@ class App extends Component {
    */
   #resetPuzzleState () {
     this.gameController.resetPuzzle() // Reset the puzzle in the GameController.
-    // this.setState({ grid: this.gameController.getGrid(), isCompleted: false }) // Update the state.
 
     this.setState({
       grid: this.gameController.getGrid(),
@@ -206,10 +190,6 @@ class App extends Component {
       originalGrid: this.gameController.getOriginalGrid(),
       isCompleted: false
     })
-
-    // const newGrid = this.gameController.getGrid()
-    // console.log('New Grid after game generation:', newGrid) // Log the new grid.
-    // this.setState({ grid: newGrid, isCompleted: false }) // Update the state.
   }
 
   /**
@@ -233,14 +213,6 @@ class App extends Component {
         />
         <div className="controls">
           {/* Render the control buttons */}
-          {/* <HintButton
-            grid={grid}
-            onHint={(row, col, value) => this.handleHint(row, col, value)}
-          />
-          <SolverButton
-            grid={grid}
-            onSolve={this.handleSolve}
-          /> */}
           <HintButton onHint={this.handleHint} />
           <SolverButton onSolve={this.handleSolve} />
           <button onClick={this.handleCheckSolution}>Check Solution</button>
