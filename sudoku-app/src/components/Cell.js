@@ -19,6 +19,7 @@ class Cell extends Component {
 
     // Bind the event handler to the class
     this.handleChange = this.handleChange.bind(this)
+    this.handleKeyDown = this.handleKeyDown.bind(this)
   }
 
   /**
@@ -29,6 +30,16 @@ class Cell extends Component {
    */
   handleChange (e) {
     this.#handleInputChange(e)
+  }
+
+  /**
+   * Handles key down events to restrict input to digits 1-9.
+   * Prevents other key inputs from affecting the cell's value.
+   *
+   * @param {object} e - Event object from the input field.
+   */
+  handleKeyDown (e) {
+    this.#handleKeyDown(e)
   }
 
   /* Private methods */
@@ -46,6 +57,27 @@ class Cell extends Component {
     if (/^[1-9]?$/.test(inputValue)) {
       this.props.onChange(inputValue ? parseInt(inputValue) : null) // Convert to integer if valid.
     }
+  }
+
+  /**
+   * Private method to handle key down events for the cell's input field.
+   * Restricts input to digits 1-9, navigation keys, and deletion keys.
+   * Prevents any other key inputs from affecting the cell's value.
+   *
+   * @param {object} e - The keyboard event object triggered by a key press.
+   * @private
+   */
+  #handleKeyDown (e) {
+    const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown']
+    const isNumberKey = /^[1-9]$/.test(e.key)
+
+    // Allow navigation and deletion keys
+    if (allowedKeys.includes(e.key) || isNumberKey) {
+      return // Allow valid key inputs.
+    }
+
+    // Prevent default behavior for invalid keys.
+    e.preventDefault()
   }
 
   /* Required methods */
@@ -74,7 +106,8 @@ class Cell extends Component {
         type="text"
         className={`cell ${isEditable ? 'editable' : 'non-editable'}`} // Style based on editability.
         value={value || ''} // Show empty if value is null.
-        onChange={this.handleChange} // Attach the change handler..
+        onChange={this.handleChange} // Attach the change handler.
+        onKeyDown={this.handleKeyDown} // Attach the key down handler.
         readOnly={!isEditable} // Disable input if not editable
       />
     )

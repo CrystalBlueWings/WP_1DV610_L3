@@ -60,6 +60,16 @@ class GameController {
   }
 
   /**
+   * Checks if the current puzzle is complete.
+   * A puzzle is considered complete if all cells in the grid are filled (non-null).
+   *
+   * @returns {boolean} - True if the puzzle is complete, false otherwise.
+   */
+  isPuzzleComplete () {
+    return this.#isPuzzleComplete()
+  }
+
+  /**
    * Retrieves a hint for the next move.
    *
    * @returns {object|null} - An object with row, col, and value keys for the hint, or null if no hint is available.
@@ -142,6 +152,18 @@ class GameController {
       this.puzzle.setGrid(solvedGrid) // Update the puzzle with the solved grid.
     }
     return solvedGrid
+  }
+
+  /**
+   * Private method to check if the current puzzle grid is complete.
+   * A grid is considered complete if all cells are non-null.
+   *
+   * @returns {boolean} - True if every cell in the grid is filled, false otherwise.
+   * @private
+   */
+  #isPuzzleComplete () {
+    const grid = this.puzzle.getGrid()
+    return grid.every(row => row.every(cell => cell !== null))
   }
 
   /**

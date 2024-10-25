@@ -64,7 +64,12 @@ class App extends Component {
    * @param {number} value - The hint value to set.
    */
   handleHint (row, col, value) {
-    this.#applyHint(row, col, value)
+    // this.#applyHint(row, col, value)
+
+    const hint = this.gameController.getHint()
+    if (hint) {
+      this.#applyHint(hint.row, hint.col, hint.value)
+    }
   }
 
   /**
@@ -157,9 +162,10 @@ class App extends Component {
    * @private
    */
   #handleCheckSolution () {
-    const isSolved = this.gameController.validatePuzzle()
+    const isComplete = this.gameController.isPuzzleComplete()
+    const isValid = this.gameController.validatePuzzle()
 
-    if (isSolved) {
+    if (isComplete && isValid) {
       alert('Congratulations! Puzzle solved.')
     } else {
       alert('The puzzle is not solved correctly or is incomplete.')
