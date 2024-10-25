@@ -151,7 +151,8 @@ class PuzzleBoard extends Component {
    * @private
    */
   #renderPuzzleBoard () {
-    const { grid, originalGrid, isCompleted } = this.state
+    // const { grid, originalGrid, isCompleted } = this.state
+    const { grid, originalGrid } = this.state
 
     // console.log('Original Grid:', originalGrid) // Debugging log
     // console.log('Grid:', grid) // Debugging log
@@ -171,10 +172,6 @@ class PuzzleBoard extends Component {
             ))}
           </div>
         ))}
-        {/* Button to validate the puzzle solution */}
-        <button onClick={this.checkCompletion} disabled={isCompleted}>
-          Check Solution
-        </button>
       </div>
     )
   }

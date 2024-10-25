@@ -1,32 +1,3 @@
-/* import logo from './logo.svg';
-import './App.css';
-
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
-
-export default App;
- */
-
-/* ---------------------------------------------------------------------- */
-
 import React, { Component } from 'react'
 import PuzzleBoard from './components/PuzzleBoard.js' // Import the main grid component.
 import HintButton from './components/HintButton.js' // Import the hint button component.
@@ -47,12 +18,13 @@ class App extends Component {
   constructor (props) {
     super(props)
 
-    // Bind methods to the instance
+    // Bind methods to the instance.
     this.handleCellChange = this.handleCellChange.bind(this)
     this.handleHint = this.handleHint.bind(this)
     this.handleSolve = this.handleSolve.bind(this)
     this.handleReset = this.handleReset.bind(this)
     this.handleNewGame = this.handleNewGame.bind(this)
+    this.handleCheckSolution = this.handleCheckSolution.bind(this)
 
     // Initialize the game controller to manage game logic.
     this.gameController = new GameController()
@@ -94,6 +66,13 @@ class App extends Component {
    */
   handleSolve () {
     this.#solveCurrentPuzzle()
+  }
+
+  /**
+   * Handles checking the puzzle solution.
+   */
+  handleCheckSolution () {
+    this.#handleCheckSolution()
   }
 
   /**
@@ -158,6 +137,21 @@ class App extends Component {
   }
 
   /**
+   * Private method to handle checking the puzzle solution.
+   *
+   * @private
+   */
+  #handleCheckSolution () {
+    const isSolved = this.gameController.validatePuzzle()
+
+    if (isSolved) {
+      alert('Congratulations! Puzzle solved.')
+    } else {
+      alert('The puzzle is not solved correctly or is incomplete.')
+    }
+  }
+
+  /**
    * Private method to reset the puzzle to its initial state.
    *
    * @private
@@ -217,6 +211,7 @@ class App extends Component {
             grid={grid}
             onSolve={this.handleSolve}
           />
+          <button onClick={this.handleCheckSolution}>Check Solution</button>
           <button onClick={this.handleReset}>Reset Puzzle</button>
           <button onClick={() => this.handleNewGame('easy')}>New Easy Game</button>
           <button onClick={() => this.handleNewGame('medium')}>New Medium Game</button>

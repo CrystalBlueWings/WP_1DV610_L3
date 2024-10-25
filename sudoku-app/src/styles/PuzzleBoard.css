@@ -2,16 +2,16 @@
 .puzzle-board {
   display: grid;
   grid-template-columns: repeat(9, 40px);
-  gap: 5px;
+  gap: 0; /* No gaps, all spacing will be handled by borders */
   margin-top: 20px;
   padding: 10px;
   background-color: #ffffff;
-  border: 2px solid #333;
-  border-radius: 5px;
-  position: relative; /* Ensure the container is positioned */
-  padding: 10px;      /* Add padding if necessary */
+  border-radius: 5px; /* Rounded corners on outer border */
+  position:relative; /* Ensure the container is positioned */
+  padding: 0px;      /* Add padding if necessary */
 }
 
+/* Row styles to maintain cell alignment */
 .row {
   display: contents; /* Allows cells to align in the grid */
 }

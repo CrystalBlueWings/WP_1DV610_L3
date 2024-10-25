@@ -1,19 +1,52 @@
 /* Styles specific to individual Sudoku cells */
+
+/* Default cell styles */
 .cell {
   width: 40px;
   height: 40px;
   font-size: 1.2rem;
   text-align: center;
-  border: 1px solid #ccc;
-  border-radius: 3px;
+  border: 1px solid #ccc; /* Base border for cells */
+  border-radius: 3px; /* Rounded corners on grid border */
   outline: none;
   background-color: #fafafa;
+  box-shadow: none; /* Remove any shadow effect for flat look */
 }
 
+/* Editable cell styles */
 .cell.editable {
   background-color: #e0f7fa;
 }
 
+/* Non-editable cell styles */
 .cell.non-editable {
   background-color: #eceff1;
+}
+
+/* Thicker borders to create 3x3 cell distinction */
+/* Right border for every 3rd column to create 3x3 boxes */
+.cell:nth-child(3n) {
+  border-right: 3px solid #333;
+}
+
+/* Thicker left border for the first column of each 3x3 block */
+.cell:nth-child(1),
+.cell:nth-child(4),
+.cell:nth-child(7) {
+  border-left: 3px solid #333;
+}
+
+/* Thicker top border for the first row of each 3x3 block */
+.row:nth-child(1) .cell,
+.row:nth-child(4) .cell,
+.row:nth-child(7) .cell {
+  border-top: 3px solid #333;
+}
+
+/* Ensure the last cell in each row and column has a consistent border */
+.row:nth-child(9) .cell {
+  border-bottom: 2px solid #333;
+}
+.cell:nth-child(9) {
+  border-right: 2px solid #333;
 }
