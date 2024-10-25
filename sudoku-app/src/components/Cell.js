@@ -17,9 +17,22 @@ class Cell extends Component {
   constructor (props) {
     super(props)
 
+    // Use React refs to control focus between cells.
+    this.inputRef = React.createRef()
+
     // Bind the event handler to the class
     this.handleChange = this.handleChange.bind(this)
     this.handleKeyDown = this.handleKeyDown.bind(this)
+  }
+
+  /**
+   * Sets focus on the cell's input field.
+   * Uses the React ref `inputRef` to control focus between cells.
+   */
+  focus () {
+    if (this.inputRef.current) {
+      this.inputRef.current.focus()
+    }
   }
 
   /**
@@ -71,8 +84,14 @@ class Cell extends Component {
     const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown']
     const isNumberKey = /^[1-9]$/.test(e.key)
 
-    // Allow navigation and deletion keys
+    // Allow navigation and deletion keys.
     if (allowedKeys.includes(e.key) || isNumberKey) {
+      if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(e.key)) {
+        e.preventDefault()
+        if (this.props.onMove) {
+          this.props.onMove(e.key)
+        }
+      }
       return // Allow valid key inputs.
     }
 
@@ -103,6 +122,7 @@ class Cell extends Component {
 
     return (
       <input
+        ref={this.inputRef}
         type="text"
         className={`cell ${isEditable ? 'editable' : 'non-editable'}`} // Style based on editability.
         value={value || ''} // Show empty if value is null.

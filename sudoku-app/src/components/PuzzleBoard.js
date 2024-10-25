@@ -25,10 +25,40 @@ class PuzzleBoard extends Component {
     // State initialization.
     const emptyGrid = Array(9).fill(Array(9).fill(null)) // 9x9 empty grid.
 
+    // Create React refs for each cell.
+    this.cellRefs = Array.from({ length: 9 }, () => Array(9).fill(null))
+
     this.state = {
       grid: emptyGrid, // Initialize grid.
       originalGrid: emptyGrid, // Initialize empty grid.
       isCompleted: false // Track if the puzzle is complete.
+    }
+  }
+
+  /**
+   * Handles navigation between cells in the Sudoku grid based on arrow key input.
+   * Updates focus to the cell in the specified direction.
+   *
+   * @param {number} row - The current row index of the focused cell.
+   * @param {number} col - The current column index of the focused cell.
+   * @param {string} direction - The direction to move ('ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown').
+   */
+  handleMove = (row, col, direction) => {
+    let newRow = row
+    let newCol = col
+
+    if (direction === 'ArrowLeft') {
+      newCol = (col - 1 + 9) % 9
+    } else if (direction === 'ArrowRight') {
+      newCol = (col + 1) % 9
+    } else if (direction === 'ArrowUp') {
+      newRow = (row - 1 + 9) % 9
+    } else if (direction === 'ArrowDown') {
+      newRow = (row + 1) % 9
+    }
+
+    if (this.cellRefs[newRow][newCol]) {
+      this.cellRefs[newRow][newCol].focus()
     }
   }
 
@@ -158,11 +188,7 @@ class PuzzleBoard extends Component {
    * @private
    */
   #renderPuzzleBoard () {
-    // const { grid, originalGrid, isCompleted } = this.state
     const { grid, originalGrid } = this.state
-
-    // console.log('Original Grid:', originalGrid) // Debugging log
-    // console.log('Grid:', grid) // Debugging log
 
     return (
       <div className="puzzle-board">
@@ -172,9 +198,13 @@ class PuzzleBoard extends Component {
             {row.map((cellValue, colIndex) => (
               <Cell
                 key={`${rowIndex}-${colIndex}`}
+                ref={(cellInstance) => {
+                  this.cellRefs[rowIndex][colIndex] = cellInstance
+                }}
                 value={cellValue}
                 isEditable={originalGrid[rowIndex][colIndex] === null} // Editable if initially empty.
                 onChange={(newValue) => this.handleCellChange(rowIndex, colIndex, newValue)}
+                onMove={(direction) => this.handleMove(rowIndex, colIndex, direction)}
               />
             ))}
           </div>
