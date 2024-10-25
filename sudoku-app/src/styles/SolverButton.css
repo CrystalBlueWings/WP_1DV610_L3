@@ -1,0 +1,20 @@
+/* Styles specific to the Solver Button */
+button {
+  padding: 10px 15px;
+  font-size: 1rem;
+  background-color: #66bb6a;
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #43a047;
+}
+
+button:disabled {
+  background-color: #cfd8dc;
+  cursor: not-allowed;
+}

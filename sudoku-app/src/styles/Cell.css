@@ -1,0 +1,19 @@
+/* Styles specific to individual Sudoku cells */
+.cell {
+  width: 40px;
+  height: 40px;
+  font-size: 1.2rem;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  outline: none;
+  background-color: #fafafa;
+}
+
+.cell.editable {
+  background-color: #e0f7fa;
+}
+
+.cell.non-editable {
+  background-color: #eceff1;
+}

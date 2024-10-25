@@ -1,0 +1,15 @@
+/* Styles specific to the Sudoku Puzzle Board */
+.puzzle-board {
+  display: grid;
+  grid-template-columns: repeat(9, 40px);
+  gap: 5px;
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #ffffff;
+  border: 2px solid #333;
+  border-radius: 5px;
+}
+
+.row {
+  display: contents; /* Allows cells to align in the grid */
+}
