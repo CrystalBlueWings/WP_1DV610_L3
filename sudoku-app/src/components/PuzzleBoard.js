@@ -19,6 +19,9 @@ class PuzzleBoard extends Component {
   constructor (props) {
     super(props)
 
+    // Create an instance of SudokuService.
+    this.sudokuService = new SudokuService()
+
     // State initialization.
     const emptyGrid = Array(9).fill(Array(9).fill(null)) // 9x9 empty grid.
 
@@ -73,8 +76,10 @@ class PuzzleBoard extends Component {
    * @private
    */
   #generateNewPuzzle (difficulty) {
-    const sudokuService = new SudokuService()
-    const newPuzzle = sudokuService.generatePuzzle(difficulty)
+    // Use the instance of SudokuService to generate a new puzzle
+    const newPuzzle = this.sudokuService.generatePuzzle(difficulty)
+    // const sudokuService = new SudokuService()
+    // const newPuzzle = sudokuService.generatePuzzle(difficulty)
     this.setState({
       grid: newPuzzle,
       originalGrid: JSON.parse(JSON.stringify(newPuzzle)) // Store the initially generated grid as a deep copy to prevent modifications and to avoid referencing issues.
@@ -88,11 +93,25 @@ class PuzzleBoard extends Component {
    * @private
    */
   #checkCompletion () {
-    const isSolved = SudokuService.validateGrid(this.state.grid)
+    // Check if all cells are filled.
+    const isComplete = this.state.grid.every(row => row.every(cell => cell !== null))
+
+    // Use the instance of SudokuService to validate the grid.
+    const isValid = this.sudokuService.validateGrid(this.state.grid)
+
+    // Only consider it solved if both complete and valid.
+    const isSolved = isComplete && isValid
     this.setState({ isCompleted: isSolved })
+
+    // Use the instance of SudokuService to validate the grid
+    // const isSolved = this.sudokuService.validateGrid(this.state.grid)
+    // const isSolved = SudokuService.validateGrid(this.state.grid)
+    // this.setState({ isCompleted: isSolved })
 
     if (isSolved) {
       alert('Congratulations! Puzzle solved.')
+    } else {
+      alert('The puzzle is not solved correctly or is incomplete.')
     }
   }
 
@@ -134,8 +153,8 @@ class PuzzleBoard extends Component {
   #renderPuzzleBoard () {
     const { grid, originalGrid, isCompleted } = this.state
 
-    console.log('Original Grid:', originalGrid) // Debugging log
-    console.log('Grid:', grid) // Debugging log
+    // console.log('Original Grid:', originalGrid) // Debugging log
+    // console.log('Grid:', grid) // Debugging log
 
     return (
       <div className="puzzle-board">
