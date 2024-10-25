@@ -20,9 +20,11 @@ class PuzzleBoard extends Component {
     super(props)
 
     // State initialization.
+    const emptyGrid = Array(9).fill(Array(9).fill(null)) // 9x9 empty grid.
+
     this.state = {
-      grid: Array(9).fill(Array(9).fill(null)), // 9x9 empty grid.
-      originalGrid: [], // Store the initially generated grid to prevent modifications.
+      grid: emptyGrid, // Initialize grid.
+      originalGrid: emptyGrid, // Initialize empty grid.
       isCompleted: false // Track if the puzzle is complete.
     }
   }
@@ -71,10 +73,11 @@ class PuzzleBoard extends Component {
    * @private
    */
   #generateNewPuzzle (difficulty) {
-    const newPuzzle = SudokuService.generatePuzzle(difficulty)
+    const sudokuService = new SudokuService()
+    const newPuzzle = sudokuService.generatePuzzle(difficulty)
     this.setState({
       grid: newPuzzle,
-      originalGrid: newPuzzle
+      originalGrid: JSON.parse(JSON.stringify(newPuzzle)) // Store the initially generated grid as a deep copy to prevent modifications and to avoid referencing issues.
     })
   }
 
@@ -130,6 +133,9 @@ class PuzzleBoard extends Component {
    */
   #renderPuzzleBoard () {
     const { grid, originalGrid, isCompleted } = this.state
+
+    console.log('Original Grid:', originalGrid) // Debugging log
+    console.log('Grid:', grid) // Debugging log
 
     return (
       <div className="puzzle-board">
