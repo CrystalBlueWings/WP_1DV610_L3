@@ -48,6 +48,17 @@ class SudokuService {
   }
 
   /**
+   * Public method to validate the structure of a Sudoku grid.
+   * Exposes the private method for external access.
+   *
+   * @param {Array} grid - The grid to validate, expected to be a 9x9 matrix.
+   * @returns {boolean} - Returns true if the grid has the correct structure, false otherwise.
+   */
+  isValidGridStructure (grid) {
+    return this.#isValidGridStructure(grid)
+  }
+
+  /**
    * Provides a hint for a given Sudoku grid.
    * The hint suggests a number that can be placed in a specific cell.
    *
@@ -55,6 +66,12 @@ class SudokuService {
    * @returns {object|null} - An object with row, col, and value keys, or null if no hint is available.
    */
   getHint (grid) {
+    // Validate the grid structure before calling any npm package functions.
+    if (!this.#isValidGridStructure(grid)) {
+      console.error('Invalid grid structure:', grid)
+      return null
+    }
+    // Proceed with hint generation using the package's functionality.
     return this.#getHintFromGrid(grid)
   }
 
@@ -130,6 +147,12 @@ class SudokuService {
    */
   #getHintFromGrid (grid) {
     try {
+      // Check if the grid has a valid structure.
+      if (!this.#isValidGridStructure(grid)) {
+        console.error('Invalid grid structure:', grid)
+        return null
+      }
+
       // Initialize a new HintGenerator instance with the current grid.
       const hintGenerator = new HintGenerator(grid)
 
@@ -149,6 +172,20 @@ class SudokuService {
       console.error('Error generating hint for Sudoku puzzle:', error)
       return null
     }
+  }
+
+  /**
+   * Private method to validate the structure of a Sudoku grid.
+   * Ensures that the grid is a 9x9 matrix with each row being an array of length 9.
+   *
+   * @param {Array} grid - The grid to validate, expected to be a 9x9 matrix.
+   * @returns {boolean} - Returns true if the grid has the correct structure, false otherwise.
+   * @private
+   */
+  #isValidGridStructure (grid) {
+    // Check if grid is a 9x9 matrix
+    if (!Array.isArray(grid) || grid.length !== 9) return false
+    return grid.every(row => Array.isArray(row) && row.length === 9)
   }
 }
 

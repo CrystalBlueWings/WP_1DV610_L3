@@ -51,9 +51,17 @@ class HintButton extends Component {
    * @private
    */
   #generateHintForUser () {
+    console.log('Current Grid State before hint generation:', this.props.grid) // Log the grid state
+
+    if (!this.sudokuService.isValidGridStructure(this.props.grid)) {
+      console.error('Invalid grid structure before generating hint:', this.props.grid)
+      alert('Invalid grid structure detected.')
+      return
+    }
+
     const hint = this.sudokuService.getHint(this.props.grid)
 
-    // If a hint is available, pass it to the parent component
+    // If a hint is available, pass it to the parent component.
     if (hint) {
       this.props.onHint(hint.row, hint.col, hint.value)
     } else {

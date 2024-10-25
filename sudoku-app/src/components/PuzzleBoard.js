@@ -41,6 +41,20 @@ class PuzzleBoard extends Component {
   }
 
   /**
+   * React lifecycle method that runs after the component has updated.
+   * It checks if the `grid` prop has changed and updates the component's state accordingly.
+   *
+   * @param {object} prevProps - The previous props before the update.
+   * @private
+   */
+  componentDidUpdate (prevProps) {
+    if (prevProps.grid !== this.props.grid) {
+      console.log('PuzzleBoard - Grid Updated:', this.props.grid)
+      this.setState({ grid: this.props.grid })
+    }
+  }
+
+  /**
    * Generates a new puzzle and set the grid state.
    *
    * @param {string} difficulty - The difficulty level ('easy', 'medium', 'hard')

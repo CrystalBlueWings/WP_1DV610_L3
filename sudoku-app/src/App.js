@@ -29,11 +29,17 @@ class App extends Component {
     // Initialize the game controller to manage game logic.
     this.gameController = new GameController()
 
+    // Generate a medium difficulty puzzle as default.
+    this.gameController.generateNewPuzzle('medium') // Generate a default puzzle.
+
     // Initialize the state to hold the current grid.
     this.state = {
       grid: this.gameController.getGrid(), // Get the initial grid from the GameController.
       isCompleted: false // Track if the puzzle is complete.
     }
+
+    // Log the grid to ensure it's properly initialized.
+    console.log('Initial Grid State (App.js):', this.state.grid) // Log the initial grid.
   }
 
   /**
@@ -46,6 +52,7 @@ class App extends Component {
    */
   handleCellChange (row, col, value) {
     this.#updateCellValue(row, col, value)
+    console.log('Updated Grid State:', this.state.grid) // Log the updated grid
   }
 
   /**
@@ -103,7 +110,11 @@ class App extends Component {
    */
   #updateCellValue (row, col, value) {
     this.gameController.updateCellValue(row, col, value) // Update the cell in the GameController.
-    this.setState({ grid: this.gameController.getGrid() }) // Update the grid state.
+    // this.setState({ grid: this.gameController.getGrid() }) // Update the grid state.
+
+    const updatedGrid = this.gameController.getGrid()
+    console.log('Updated Grid after cell change:', updatedGrid) // Log the updated grid.
+    this.setState({ grid: updatedGrid }) // Update the grid state.
   }
 
   /**
@@ -116,7 +127,11 @@ class App extends Component {
    */
   #applyHint (row, col, value) {
     this.gameController.updateCellValue(row, col, value) // Update the cell with the hint.
-    this.setState({ grid: this.gameController.getGrid() }) // Update the grid state.
+    // this.setState({ grid: this.gameController.getGrid() }) // Update the grid state.
+
+    const updatedGrid = this.gameController.getGrid()
+    console.log('Updated Grid after hint:', updatedGrid) // Log the updated grid.
+    this.setState({ grid: updatedGrid }) // Update the grid state.
   }
 
   /**
@@ -169,7 +184,11 @@ class App extends Component {
    */
   #generateNewGame (difficulty) {
     this.gameController.generateNewPuzzle(difficulty) // Generate a new puzzle.
-    this.setState({ grid: this.gameController.getGrid(), isCompleted: false }) // Update the state.
+    // this.setState({ grid: this.gameController.getGrid(), isCompleted: false }) // Update the state.
+
+    const newGrid = this.gameController.getGrid()
+    console.log('New Grid after game generation:', newGrid) // Log the new grid.
+    this.setState({ grid: newGrid, isCompleted: false }) // Update the state.
   }
 
   /* Required methods */
