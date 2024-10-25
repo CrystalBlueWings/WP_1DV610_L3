@@ -17,7 +17,7 @@ class Cell extends Component {
   constructor (props) {
     super(props)
 
-    // Use React refs to control focus between cells.
+    // Create a React ref to access the input element directly.
     this.inputRef = React.createRef()
 
     // Bind the event handler to the class
@@ -81,15 +81,23 @@ class Cell extends Component {
    * @private
    */
   #handleKeyDown (e) {
-    const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown']
+    const allowedKeys = [
+      'Backspace',
+      'Delete',
+      'ArrowLeft',
+      'ArrowRight',
+      'ArrowUp',
+      'ArrowDown',
+      'Tab'
+    ]
     const isNumberKey = /^[1-9]$/.test(e.key)
 
     // Allow navigation and deletion keys.
     if (allowedKeys.includes(e.key) || isNumberKey) {
-      if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(e.key)) {
+      if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Tab'].includes(e.key)) {
         e.preventDefault()
         if (this.props.onMove) {
-          this.props.onMove(e.key)
+          this.props.onMove(e.key, e.shiftKey)
         }
       }
       return // Allow valid key inputs.
@@ -97,17 +105,6 @@ class Cell extends Component {
 
     // Prevent default behavior for invalid keys.
     e.preventDefault()
-  }
-
-  /* Required methods */
-
-  /**
-   * Renders the Cell component.
-   *
-   * @returns {React.Element} The JSX representation of a single cell.
-   */
-  render () {
-    return this.#renderCell()
   }
 
   /**
@@ -131,6 +128,17 @@ class Cell extends Component {
         readOnly={!isEditable} // Disable input if not editable
       />
     )
+  }
+
+  /* Required methods */
+
+  /**
+   * Renders the Cell component.
+   *
+   * @returns {React.Element} The JSX representation of a single cell.
+   */
+  render () {
+    return this.#renderCell()
   }
 }
 

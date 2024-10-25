@@ -25,6 +25,16 @@ class Puzzle {
   }
 
   /**
+   * Set the original grid.
+   * Used to store the initial state of the grid for resetting purposes.
+   *
+   * @param {number[][]} newGrid - A 9x9 matrix representing the original Sudoku puzzle.
+   */
+  setOriginalGrid (newGrid) {
+    this.#setOriginalGrid(newGrid)
+  }
+
+  /**
    * Retrieve the current grid.
    * Returns a deep copy of the grid to maintain immutability.
    *
@@ -32,6 +42,16 @@ class Puzzle {
    */
   getGrid () {
     return this.#getGridInternal()
+  }
+
+  /**
+   * Retrieves the original grid.
+   * Returns a deep copy of the original grid to maintain immutability.
+   *
+   * @returns {number[][]} - A deep copy of the original grid state.
+   */
+  getOriginalGrid () {
+    return this.#getOriginalGrid()
   }
 
   /**
@@ -63,6 +83,16 @@ class Puzzle {
    */
   #setGridInternal (newGrid) {
     this.grid = this.#deepCopyGrid(newGrid) // Create a deep copy to avoid reference issues.
+  }
+
+  /**
+   * Private method to set the original grid state with a new puzzle.
+   * Creates a deep copy of the provided grid to avoid reference issues and store the initial puzzle configuration.
+   *
+   * @param {number[][]} newGrid - A 9x9 matrix representing the original Sudoku puzzle.
+   * @private
+   */
+  #setOriginalGrid (newGrid) {
     this.originalGrid = this.#deepCopyGrid(newGrid) // Store the original for reset purposes.
   }
 
@@ -75,6 +105,17 @@ class Puzzle {
    */
   #getGridInternal () {
     return this.#deepCopyGrid(this.grid) // Return a deep copy to maintain encapsulation.
+  }
+
+  /**
+   * Private method to retrieve the original grid state.
+   * Returns a deep copy of the original grid to maintain encapsulation and avoid direct mutation.
+   *
+   * @returns {number[][]} - A deep copy of the original grid state.
+   * @private
+   */
+  #getOriginalGrid () {
+    return this.#deepCopyGrid(this.originalGrid)
   }
 
   /**

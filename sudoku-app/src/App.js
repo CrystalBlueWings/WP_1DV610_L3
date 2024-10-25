@@ -35,6 +35,7 @@ class App extends Component {
     // Initialize the state to hold the current grid.
     this.state = {
       grid: this.gameController.getGrid(), // Get the initial grid from the GameController.
+      originalGrid: this.gameController.getOriginalGrid(),
       isCompleted: false // Track if the puzzle is complete.
     }
 
@@ -69,6 +70,8 @@ class App extends Component {
     const hint = this.gameController.getHint()
     if (hint) {
       this.#applyHint(hint.row, hint.col, hint.value)
+    } else {
+      alert('No hints available or puzzle is complete.')
     }
   }
 
@@ -115,11 +118,11 @@ class App extends Component {
    */
   #updateCellValue (row, col, value) {
     this.gameController.updateCellValue(row, col, value) // Update the cell in the GameController.
-    // this.setState({ grid: this.gameController.getGrid() }) // Update the grid state.
+    this.setState({ grid: this.gameController.getGrid() }) // Update the grid state.
 
-    const updatedGrid = this.gameController.getGrid()
-    console.log('Updated Grid after cell change:', updatedGrid) // Log the updated grid.
-    this.setState({ grid: updatedGrid }) // Update the grid state.
+    // const updatedGrid = this.gameController.getGrid()
+    // console.log('Updated Grid after cell change:', updatedGrid) // Log the updated grid.
+    // this.setState({ grid: updatedGrid }) // Update the grid state.
   }
 
   /**
@@ -132,11 +135,12 @@ class App extends Component {
    */
   #applyHint (row, col, value) {
     this.gameController.updateCellValue(row, col, value) // Update the cell with the hint.
-    // this.setState({ grid: this.gameController.getGrid() }) // Update the grid state.
 
-    const updatedGrid = this.gameController.getGrid()
-    console.log('Updated Grid after hint:', updatedGrid) // Log the updated grid.
-    this.setState({ grid: updatedGrid }) // Update the grid state.
+    // const updatedGrid = this.gameController.getGrid()
+    // console.log('Updated Grid after hint:', updatedGrid) // Log the updated grid.
+    // this.setState({ grid: updatedGrid }) // Update the grid state.
+
+    this.setState({ grid: this.gameController.getGrid() }) // Update the grid state.
   }
 
   /**
@@ -179,7 +183,13 @@ class App extends Component {
    */
   #resetPuzzleState () {
     this.gameController.resetPuzzle() // Reset the puzzle in the GameController.
-    this.setState({ grid: this.gameController.getGrid(), isCompleted: false }) // Update the state.
+    // this.setState({ grid: this.gameController.getGrid(), isCompleted: false }) // Update the state.
+
+    this.setState({
+      grid: this.gameController.getGrid(),
+      originalGrid: this.gameController.getOriginalGrid(),
+      isCompleted: false
+    })
   }
 
   /**
@@ -190,11 +200,57 @@ class App extends Component {
    */
   #generateNewGame (difficulty) {
     this.gameController.generateNewPuzzle(difficulty) // Generate a new puzzle.
-    // this.setState({ grid: this.gameController.getGrid(), isCompleted: false }) // Update the state.
 
-    const newGrid = this.gameController.getGrid()
-    console.log('New Grid after game generation:', newGrid) // Log the new grid.
-    this.setState({ grid: newGrid, isCompleted: false }) // Update the state.
+    this.setState({
+      grid: this.gameController.getGrid(),
+      originalGrid: this.gameController.getOriginalGrid(),
+      isCompleted: false
+    })
+
+    // const newGrid = this.gameController.getGrid()
+    // console.log('New Grid after game generation:', newGrid) // Log the new grid.
+    // this.setState({ grid: newGrid, isCompleted: false }) // Update the state.
+  }
+
+  /**
+   * Private method to handle rendering the app.
+   *
+   * @returns {React.Element} The JSX representation of the app.
+   * @private
+   */
+  #renderApp () {
+    const { grid, originalGrid, isCompleted } = this.state
+
+    return (
+      <div className="app-container">
+        <h1>Sudoku Game</h1>
+        {/* Render the main Sudoku grid */}
+        <PuzzleBoard
+          grid={grid}
+          originalGrid={originalGrid}
+          isCompleted={isCompleted}
+          onCellChange={this.handleCellChange}
+        />
+        <div className="controls">
+          {/* Render the control buttons */}
+          {/* <HintButton
+            grid={grid}
+            onHint={(row, col, value) => this.handleHint(row, col, value)}
+          />
+          <SolverButton
+            grid={grid}
+            onSolve={this.handleSolve}
+          /> */}
+          <HintButton onHint={this.handleHint} />
+          <SolverButton onSolve={this.handleSolve} />
+          <button onClick={this.handleCheckSolution}>Check Solution</button>
+          <button onClick={this.handleReset}>Reset Puzzle</button>
+          <button onClick={() => this.handleNewGame('easy')}>New Easy Game</button>
+          <button onClick={() => this.handleNewGame('medium')}>New Medium Game</button>
+          <button onClick={() => this.handleNewGame('hard')}>New Hard Game</button>
+        </div>
+      </div>
+    )
   }
 
   /* Required methods */
@@ -206,44 +262,6 @@ class App extends Component {
    */
   render () {
     return this.#renderApp()
-  }
-
-  /**
-   * Private method to handle rendering the app.
-   *
-   * @returns {React.Element} The JSX representation of the app.
-   * @private
-   */
-  #renderApp () {
-    const { grid, isCompleted } = this.state
-
-    return (
-      <div className="app-container">
-        <h1>Sudoku Game</h1>
-        {/* Render the main Sudoku grid */}
-        <PuzzleBoard
-          grid={grid}
-          isCompleted={isCompleted}
-          onCellChange={this.handleCellChange}
-        />
-        <div className="controls">
-          {/* Render the control buttons */}
-          <HintButton
-            grid={grid}
-            onHint={(row, col, value) => this.handleHint(row, col, value)}
-          />
-          <SolverButton
-            grid={grid}
-            onSolve={this.handleSolve}
-          />
-          <button onClick={this.handleCheckSolution}>Check Solution</button>
-          <button onClick={this.handleReset}>Reset Puzzle</button>
-          <button onClick={() => this.handleNewGame('easy')}>New Easy Game</button>
-          <button onClick={() => this.handleNewGame('medium')}>New Medium Game</button>
-          <button onClick={() => this.handleNewGame('hard')}>New Hard Game</button>
-        </div>
-      </div>
-    )
   }
 }
 

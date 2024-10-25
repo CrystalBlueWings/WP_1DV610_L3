@@ -92,6 +92,15 @@ class GameController {
   }
 
   /**
+   * Retrieves the original grid state.
+   *
+   * @returns {number[][]} - The original grid as it was initially generated.
+   */
+  getOriginalGrid () {
+    return this.puzzle.getOriginalGrid() // Delegate to the Puzzle model to get the original grid.
+  }
+
+  /**
    * Resets the puzzle to its original generated state.
    */
   resetPuzzle () {
@@ -112,6 +121,7 @@ class GameController {
     console.log('Generated New Puzzle:', generatedGrid) // Log the new puzzle.
 
     this.puzzle.setGrid(generatedGrid) // Update the puzzle model with the generated grid.
+    this.puzzle.setOriginalGrid(generatedGrid) // Update the puzzle model with the original grid.
   }
 
   /**
@@ -149,7 +159,7 @@ class GameController {
   #solvePuzzleInternal () {
     const solvedGrid = this.sudokuService.solvePuzzle(this.puzzle.getGrid()) // Solve the grid using the service.
     if (solvedGrid) {
-      this.puzzle.setGrid(solvedGrid) // Update the puzzle with the solved grid.
+      this.puzzle.setGrid(solvedGrid) // Only update the current grid.
     }
     return solvedGrid
   }

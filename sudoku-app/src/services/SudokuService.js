@@ -13,7 +13,7 @@ class SudokuService {
    * Initializes the SudokuGenerator instance for puzzle generation.
    */
   constructor () {
-    // Initialize instances of the imported classes for internal use
+    // Initialize instances of the imported classes for internal use.
     this.sudokuGenerator = new SudokuGenerator()
   }
 
@@ -78,7 +78,7 @@ class SudokuService {
   /* Private methods */
 
   /**
-   * Private method to generate a new puzzle grid using the SudokuGenerator.
+   * Private method to generate a new puzzle grid.
    *
    * @param {string} difficulty - Difficulty level ('easy', 'medium', 'hard').
    * @returns {number[][]} - A 9x9 matrix representing the generated Sudoku grid.
@@ -91,12 +91,13 @@ class SudokuService {
       return puzzleGrid
     } catch (error) {
       console.error('Error generating Sudoku puzzle:', error)
-      return Array(9).fill(Array(9).fill(null)) // Return an empty 9x9 grid in case of error.
+      // return Array(9).fill(Array(9).fill(null)) // Return an empty 9x9 grid in case of error.
+      return Array.from({ length: 9 }, () => Array(9).fill(null)) // Return an empty 9x9 grid in case of error.
     }
   }
 
   /**
-   * Private method to solve the puzzle using the SudokuSolver.
+   * Private method to solve the puzzle.
    *
    * @param {number[][]} grid - A 9x9 matrix representing the current Sudoku puzzle.
    * @returns {number[][]|null} - A 9x9 matrix with the solved puzzle or null if unsolvable.
@@ -110,7 +111,7 @@ class SudokuService {
       // Solve the puzzle using a backtracking algorithm.
       const isSolved = solver.solveGrid()
 
-      // Return the solved grid if successful, otherwise null
+      // Return the solved grid if successful, otherwise null.
       return isSolved ? solver.grid.sudokuGrid : null
     } catch (error) {
       console.error('Error solving Sudoku puzzle:', error)
@@ -119,7 +120,7 @@ class SudokuService {
   }
 
   /**
-   * Private method to validate the Sudoku grid using the SudokuValidator.
+   * Private method to validate the Sudoku grid.
    *
    * @param {number[][]} grid - A 9x9 matrix representing the Sudoku puzzle.
    * @returns {boolean} - True if the grid is valid and complete, false otherwise.
@@ -130,7 +131,7 @@ class SudokuService {
       // Initialize a new SudokuValidator instance with the provided grid.
       const validator = new SudokuValidator(grid)
 
-      // Check if the grid is a valid solution.
+      // Check if the grid has a valid solution.
       return validator.isValidGrid()
     } catch (error) {
       console.error('Error validating Sudoku grid:', error)
@@ -139,7 +140,7 @@ class SudokuService {
   }
 
   /**
-   * Private method to get a hint using the HintGenerator.
+   * Private method to get a hint.
    *
    * @param {number[][]} grid - A 9x9 matrix representing the current Sudoku puzzle.
    * @returns {object|null} - An object with row, col, and value keys for the hint, or null if no hint is available.
@@ -147,17 +148,17 @@ class SudokuService {
    */
   #getHintFromGrid (grid) {
     try {
-      // Check if the grid has a valid structure.
-      if (!this.#isValidGridStructure(grid)) {
-        console.error('Invalid grid structure:', grid)
-        return null
-      }
-
       // Initialize a new HintGenerator instance with the current grid.
       const hintGenerator = new HintGenerator(grid)
 
       // Use the HintGenerator to get a hint for the next step.
       const hintCell = hintGenerator.getCellsWithFewestCandidates(1)[0]
+
+      // // Check if the grid has a valid structure.
+      // if (!this.#isValidGridStructure(grid)) {
+      //   console.error('Invalid grid structure:', grid)
+      //   return null
+      // }
 
       // If a hint is available, return the suggested row, column, and value.
       if (hintCell && hintCell.candidates.length > 0) {
@@ -183,7 +184,7 @@ class SudokuService {
    * @private
    */
   #isValidGridStructure (grid) {
-    // Check if grid is a 9x9 matrix
+    // Check if grid is a 9x9 matrix.
     if (!Array.isArray(grid) || grid.length !== 9) return false
     return grid.every(row => Array.isArray(row) && row.length === 9)
   }
