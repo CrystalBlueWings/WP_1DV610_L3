@@ -68,6 +68,10 @@ All known bugs have been resolved as of 2025-10-22.
 - Node.js version 20.6.0 or later.
 - npm package [`sudoku-puzzle-solver`](https://www.npmjs.com/package/sudoku-puzzle-solver)
 
+## Deployment
+
+The app is deployed on Netlify: [`Sudoku Game`](https://gorgeous-entremet-890297.netlify.app/)
+
 ## License
 
 This project is licensed under the MIT license. For more information, see [`LICENSE`](LICENSE).
