@@ -1,0 +1,28 @@
+"filename", "language", "JSON", "Markdown", "JSON with Comments", "JavaScript", "PostCSS", "HTML", "comment", "blank", "total"
+"c:\WP23\1DV610 - Mjukvarukvalitet\examination\WP_1DV610_L3\.eslintrc.json", "JSON with Comments", 0, 0, 3, 0, 0, 0, 0, 0, 3
+"c:\WP23\1DV610 - Mjukvarukvalitet\examination\WP_1DV610_L3\README.md", "Markdown", 0, 48, 0, 0, 0, 0, 0, 26, 74
+"c:\WP23\1DV610 - Mjukvarukvalitet\examination\WP_1DV610_L3\Reflection.md", "Markdown", 0, 21, 0, 0, 0, 0, 0, 21, 42
+"c:\WP23\1DV610 - Mjukvarukvalitet\examination\WP_1DV610_L3\Test_Plan_and_Specification.md", "Markdown", 0, 49, 0, 0, 0, 0, 0, 18, 67
+"c:\WP23\1DV610 - Mjukvarukvalitet\examination\WP_1DV610_L3\Vision_and_Requirements.md", "Markdown", 0, 52, 0, 0, 0, 0, 0, 32, 84
+"c:\WP23\1DV610 - Mjukvarukvalitet\examination\WP_1DV610_L3\package-lock.json", "JSON", 7505, 0, 0, 0, 0, 0, 0, 1, 7506
+"c:\WP23\1DV610 - Mjukvarukvalitet\examination\WP_1DV610_L3\package.json", "JSON", 38, 0, 0, 0, 0, 0, 0, 1, 39
+"c:\WP23\1DV610 - Mjukvarukvalitet\examination\WP_1DV610_L3\sudoku-app\package-lock.json", "JSON", 18035, 0, 0, 0, 0, 0, 0, 1, 18036
+"c:\WP23\1DV610 - Mjukvarukvalitet\examination\WP_1DV610_L3\sudoku-app\package.json", "JSON", 43, 0, 0, 0, 0, 0, 0, 1, 44
+"c:\WP23\1DV610 - Mjukvarukvalitet\examination\WP_1DV610_L3\sudoku-app\public\index.html", "HTML", 0, 0, 0, 0, 0, 11, 1, 1, 13
+"c:\WP23\1DV610 - Mjukvarukvalitet\examination\WP_1DV610_L3\sudoku-app\src\App.js", "JavaScript", 0, 0, 0, 167, 0, 0, 128, 38, 333
+"c:\WP23\1DV610 - Mjukvarukvalitet\examination\WP_1DV610_L3\sudoku-app\src\App.test.js", "JavaScript", 0, 0, 0, 34, 0, 0, 26, 6, 66
+"c:\WP23\1DV610 - Mjukvarukvalitet\examination\WP_1DV610_L3\sudoku-app\src\components\Cell.js", "JavaScript", 0, 0, 0, 68, 0, 0, 59, 17, 144
+"c:\WP23\1DV610 - Mjukvarukvalitet\examination\WP_1DV610_L3\sudoku-app\src\components\HintButton.js", "JavaScript", 0, 0, 0, 20, 0, 0, 21, 7, 48
+"c:\WP23\1DV610 - Mjukvarukvalitet\examination\WP_1DV610_L3\sudoku-app\src\components\PuzzleBoard.js", "JavaScript", 0, 0, 0, 80, 0, 0, 43, 13, 136
+"c:\WP23\1DV610 - Mjukvarukvalitet\examination\WP_1DV610_L3\sudoku-app\src\components\SolverButton.js", "JavaScript", 0, 0, 0, 20, 0, 0, 21, 7, 48
+"c:\WP23\1DV610 - Mjukvarukvalitet\examination\WP_1DV610_L3\sudoku-app\src\controllers\GameController.js", "JavaScript", 0, 0, 0, 45, 0, 0, 55, 12, 112
+"c:\WP23\1DV610 - Mjukvarukvalitet\examination\WP_1DV610_L3\sudoku-app\src\index.js", "JavaScript", 0, 0, 0, 9, 0, 0, 1, 2, 12
+"c:\WP23\1DV610 - Mjukvarukvalitet\examination\WP_1DV610_L3\sudoku-app\src\models\Puzzle.js", "JavaScript", 0, 0, 0, 53, 0, 0, 101, 18, 172
+"c:\WP23\1DV610 - Mjukvarukvalitet\examination\WP_1DV610_L3\sudoku-app\src\services\SudokuService.js", "JavaScript", 0, 0, 0, 78, 0, 0, 90, 19, 187
+"c:\WP23\1DV610 - Mjukvarukvalitet\examination\WP_1DV610_L3\sudoku-app\src\setupTests.js", "JavaScript", 0, 0, 0, 1, 0, 0, 4, 1, 6
+"c:\WP23\1DV610 - Mjukvarukvalitet\examination\WP_1DV610_L3\sudoku-app\src\styles\App.css", "PostCSS", 0, 0, 0, 0, 20, 0, 1, 4, 25
+"c:\WP23\1DV610 - Mjukvarukvalitet\examination\WP_1DV610_L3\sudoku-app\src\styles\Cell.css", "PostCSS", 0, 0, 0, 0, 36, 0, 9, 7, 52
+"c:\WP23\1DV610 - Mjukvarukvalitet\examination\WP_1DV610_L3\sudoku-app\src\styles\HintButton.css", "PostCSS", 0, 0, 0, 0, 17, 0, 1, 3, 21
+"c:\WP23\1DV610 - Mjukvarukvalitet\examination\WP_1DV610_L3\sudoku-app\src\styles\PuzzleBoard.css", "PostCSS", 0, 0, 0, 0, 14, 0, 2, 2, 18
+"c:\WP23\1DV610 - Mjukvarukvalitet\examination\WP_1DV610_L3\sudoku-app\src\styles\SolverButton.css", "PostCSS", 0, 0, 0, 0, 17, 0, 1, 3, 21
+"Total", "-", 25621, 170, 3, 575, 104, 11, 564, 261, 27309
