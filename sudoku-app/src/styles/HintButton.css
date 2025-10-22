@@ -1,5 +1,5 @@
 /* Styles specific to the Hint Button */
-button {
+.hint-button {
   padding: 10px 15px;
   font-size: 1rem;
   background-color: #29b6f6;
@@ -10,11 +10,11 @@ button {
   transition: background-color 0.3s;
 }
 
-button:hover {
+.hint-button:hover {
   background-color: #0288d1;
 }
 
-button:disabled {
+.hint-button:disabled {
   background-color: #cfd8dc;
   cursor: not-allowed;
 }

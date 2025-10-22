@@ -7,9 +7,13 @@ class Puzzle {
    * Initializes the current grid state and the original grid for reset purposes.
    */
   constructor () {
-    this.grid = [] // The current grid state.
-    this.originalGrid = [] // The initial generated grid for resetting purposes.
+    this.#grid = [] // The current grid state.
+    this.#originalGrid = [] // The initial generated grid for resetting purposes.
   }
+
+  // Private fields
+  #grid
+  #originalGrid
 
   /**
    * Set the grid with a new puzzle.
@@ -79,7 +83,7 @@ class Puzzle {
    * @private
    */
   #setGridInternal (newGrid) {
-    this.grid = this.#deepCopyGrid(newGrid) // Create a deep copy to avoid reference issues.
+    this.#grid = this.#deepCopyGrid(newGrid) // Create a deep copy to avoid reference issues and store the current grid state.
   }
 
   /**
@@ -90,7 +94,7 @@ class Puzzle {
    * @private
    */
   #setOriginalGrid (newGrid) {
-    this.originalGrid = this.#deepCopyGrid(newGrid) // Store the original for reset purposes.
+    this.#originalGrid = this.#deepCopyGrid(newGrid) // Store the original for reset purposes.
   }
 
   /**
@@ -101,7 +105,7 @@ class Puzzle {
    * @private
    */
   #getGridInternal () {
-    return this.#deepCopyGrid(this.grid) // Return a deep copy to maintain encapsulation.
+    return this.#deepCopyGrid(this.#grid) // Return a deep copy to maintain encapsulation.
   }
 
   /**
@@ -112,7 +116,7 @@ class Puzzle {
    * @private
    */
   #getOriginalGrid () {
-    return this.#deepCopyGrid(this.originalGrid)
+    return this.#deepCopyGrid(this.#originalGrid)
   }
 
   /**
@@ -126,7 +130,7 @@ class Puzzle {
    */
   #updateCellInternal (row, col, value) {
     if (this.#isValidIndex(row, col)) {
-      this.grid[row][col] = value // Update the value if indexes are valid.
+      this.#grid[row][col] = value // Update the value if indexes are valid.
     }
   }
 
@@ -137,7 +141,7 @@ class Puzzle {
    * @private
    */
   #resetGridInternal () {
-    this.grid = this.#deepCopyGrid(this.originalGrid) // Reset to the original state.
+    this.#grid = this.#deepCopyGrid(this.#originalGrid) // Reset to the original state.
   }
 
   /**

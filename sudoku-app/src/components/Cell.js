@@ -123,6 +123,7 @@ class Cell extends Component {
         onChange={this.handleChange} // Attach the change handler.
         onKeyDown={this.handleKeyDown} // Attach the key down handler.
         readOnly={!isEditable} // Disable input if not editable
+        aria-label={isEditable ? 'Editable Sudoku cell' : 'Fixed Sudoku cell'} // Accessibility label for when using screen readers.
       />
     )
   }

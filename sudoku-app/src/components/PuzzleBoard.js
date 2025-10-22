@@ -19,30 +19,6 @@ class PuzzleBoard extends Component {
     this.cellRefs = Array.from({ length: 9 }, () => Array(9).fill(null))
   }
 
-  /**
-   * Handles changes in the cell's value and update the state.
-   *
-   * @param {number} row - Row index of the cell
-   * @param {number} col - Column index of the cell
-   * @param {number|null} value - New value to set (1-9 or null)
-   */
-  handleCellChange (row, col, value) {
-    this.#handleCellChange(row, col, value)
-  }
-
-  /**
-   * Handles cell movement within the Sudoku grid based on key input.
-   * Determines the new cell position based on the direction key and whether the shift key is held.
-   *
-   * @param {number} row - The current row index of the focused cell.
-   * @param {number} col - The current column index of the focused cell.
-   * @param {string} direction - The direction of movement ('ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Tab').
-   * @param {boolean} shiftKey - True if the shift key is held during movement, false otherwise.
-   */
-  handleCellMove (row, col, direction, shiftKey) {
-    this.#handleCellMove(row, col, direction, shiftKey)
-  }
-
   /* Private methods */
 
   /**
@@ -134,9 +110,8 @@ class PuzzleBoard extends Component {
                 ref={(cellInstance) => { this.cellRefs[rowIndex][colIndex] = cellInstance }}
                 value={cellValue}
                 isEditable={originalGrid[rowIndex][colIndex] === null} // Editable if initially empty.
-                onChange={(newValue) => this.handleCellChange(rowIndex, colIndex, newValue)}
-                onMove={(direction, shiftKey) => this.#handleCellMove(rowIndex, colIndex, direction, shiftKey)
-                }
+                onChange={(newValue) => this.#handleCellChange(rowIndex, colIndex, newValue)}
+                onMove={(direction, shiftKey) => this.#handleCellMove(rowIndex, colIndex, direction, shiftKey)}
               />
             ))}
           </div>

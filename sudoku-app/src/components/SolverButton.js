@@ -26,7 +26,7 @@ class SolverButton extends Component {
    */
   #renderSolverButton () {
     return (
-      <button onClick={this.solvePuzzle.bind(this)}>
+      <button type="button" className="solve-button" onClick={this.solvePuzzle.bind(this)}>
         Solve Puzzle
       </button>
     )

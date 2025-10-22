@@ -1,0 +1,10 @@
+[build]
+base = "sudoku-app"
+publish = "build"
+command = "npm ci && npm run build"
+
+# (Optional, but good if I decide to expand to routing in the future)
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200

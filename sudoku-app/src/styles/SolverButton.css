@@ -1,5 +1,5 @@
 /* Styles specific to the Solver Button */
-button {
+.solve-button {
   padding: 10px 15px;
   font-size: 1rem;
   background-color: #66bb6a;
@@ -10,11 +10,11 @@ button {
   transition: background-color 0.3s;
 }
 
-button:hover {
+.solve-button:hover {
   background-color: #43a047;
 }
 
-button:disabled {
+.solve-button:disabled {
   background-color: #cfd8dc;
   cursor: not-allowed;
 }

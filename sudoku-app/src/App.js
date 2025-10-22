@@ -5,6 +5,9 @@ import SolverButton from './components/SolverButton.js' // Import the solver but
 import GameController from './controllers/GameController.js' // Import the game controller to manage state.
 import './styles/App.css' // Import general app styles.
 
+// Key for local storage.
+const STORAGE_KEY = 'sudoku-app-state-v1'
+
 /**
  * App class - Main entry point for the Sudoku application.
  * Handles the top-level state and interaction logic.
@@ -25,20 +28,31 @@ class App extends Component {
     this.handleReset = this.handleReset.bind(this)
     this.handleNewGame = this.handleNewGame.bind(this)
     this.handleCheckSolution = this.handleCheckSolution.bind(this)
+    this.handleClearSaved = this.handleClearSaved.bind(this)
 
     // Initialize the game controller to manage game logic.
     this.gameController = new GameController()
 
-    // Generate a medium difficulty puzzle as default.
-    this.gameController.generateNewPuzzle('medium') // Generate a default puzzle.
+    // Try to restore saved game state from local storage. Otherwise, generate a new puzzle.
+    const restored = this.#tryRestore()
+    if (!restored) {
+      this.gameController.generateNewPuzzle('medium')
+    }
 
     // Initialize the state to hold the current grid.
     this.state = {
       grid: this.gameController.getGrid(), // Get the initial grid from the GameController.
       originalGrid: this.gameController.getOriginalGrid(),
-      isCompleted: false // Track if the puzzle is complete.
+      isCompleted: false, // Track if the puzzle is complete.
+      difficulty: this.gameController.difficulty // Store the current difficulty level.
     }
   }
+
+  /**
+   * Lifecycle method called after the component updates.
+   * Used to persist the game state to local storage.
+   */
+  componentDidUpdate () { this.#persist() } // Persist state after each update.
 
   /**
    * Handles changes in the cell's value.
@@ -100,6 +114,28 @@ class App extends Component {
     this.#generateNewGame(difficulty)
   }
 
+  /**
+   * Handles the stored game state and clears it from local storage.
+   */
+  handleClearSaved () {
+    const confirmed = window.confirm('Clear saved game and start a new puzzle?')
+    if (!confirmed) return
+
+    try {
+      localStorage.removeItem(STORAGE_KEY)
+    } catch { /* no-op */ }
+
+    // Re-start with a new puzzle (medium as baseline)
+    const difficulty = 'medium'
+    this.gameController.generateNewPuzzle(difficulty)
+    this.setState({
+      grid: this.gameController.getGrid(),
+      originalGrid: this.gameController.getOriginalGrid(),
+      isCompleted: false,
+      difficulty
+    })
+  }
+
   /* Private methods */
 
   /**
@@ -112,7 +148,7 @@ class App extends Component {
    */
   #updateCellValue (row, col, value) {
     this.gameController.updateCellValue(row, col, value) // Update the cell in the GameController.
-    this.setState({ grid: this.gameController.getGrid() }) // Update the grid state.
+    this.setState({ grid: this.gameController.getGrid(), isCompleted: false }) // Update the grid state and reset completion status.
   }
 
   /**
@@ -152,7 +188,7 @@ class App extends Component {
    */
   #handleCheckSolution () {
     const isComplete = this.gameController.isPuzzleComplete()
-    const isValid = this.gameController.validatePuzzle()
+    const isValid = this.gameController.validatePuzzle() // via L2
 
     if (isComplete && isValid) {
       alert('Congratulations! Puzzle solved.')
@@ -188,8 +224,62 @@ class App extends Component {
     this.setState({
       grid: this.gameController.getGrid(),
       originalGrid: this.gameController.getOriginalGrid(),
-      isCompleted: false
+      isCompleted: false,
+      difficulty
     })
+  }
+
+  // ---- Persistence ----
+
+  /**
+   * Private method to persist the current game state to local storage.
+   *
+   * @private
+   */
+  #persist () {
+    const { grid, originalGrid, isCompleted, difficulty } = this.state // Get current state.
+
+    // Persist the game state to local storage. Try-catch to handle potential storage errors.
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({
+        grid, originalGrid, isCompleted, difficulty
+      }))
+    } catch (e) {
+      // No-op: localStorage can be blocked in some browsers/settings. No-op means we silently fail.
+    }
+  }
+
+  /**
+   * Private method to attempt restoring the game state from local storage.
+   *
+   * @returns {boolean} True if restoration was successful, false otherwise.
+   * @private
+   */
+  #tryRestore () {
+    // Try to load the game state from local storage.
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY)
+      if (!raw) return false
+      const data = JSON.parse(raw)
+      if (!this.#isValidGrid(data?.grid) || !this.#isValidGrid(data?.originalGrid)) return false
+      // Load into controller + keep difficulty
+      this.gameController.difficulty = data.difficulty || 'medium'
+      this.gameController.puzzle.setGrid(data.grid)
+      this.gameController.puzzle.setOriginalGrid(data.originalGrid)
+      return true // Successfully restored.
+    } catch { return false } // On any error, return false.
+  }
+
+  /**
+   * Private method to validate the grid structure.
+   *
+   * @param {any} grid - The grid to validate.
+   * @returns {boolean} True if the grid is a valid 9x9 array, false otherwise.
+   * @private
+   */
+  #isValidGrid (grid) {
+    if (!Array.isArray(grid) || grid.length !== 9) return false // Must be an array of 9 rows.
+    return grid.every(r => Array.isArray(r) && r.length === 9) // Each row must be an array of 9 columns.
   }
 
   /**
@@ -199,7 +289,7 @@ class App extends Component {
    * @private
    */
   #renderApp () {
-    const { grid, originalGrid, isCompleted } = this.state
+    const { grid, originalGrid, isCompleted, difficulty } = this.state
 
     return (
       <div className="app-container">
@@ -220,7 +310,9 @@ class App extends Component {
           <button onClick={() => this.handleNewGame('easy')}>New Easy Game</button>
           <button onClick={() => this.handleNewGame('medium')}>New Medium Game</button>
           <button onClick={() => this.handleNewGame('hard')}>New Hard Game</button>
+          <button onClick={this.handleClearSaved}>Clear saved game</button>
         </div>
+        <p>Current difficulty: <strong>{difficulty}</strong></p>
       </div>
     )
   }

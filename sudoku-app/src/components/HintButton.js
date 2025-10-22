@@ -26,7 +26,7 @@ class HintButton extends Component {
    */
   #renderHintButton () {
     return (
-      <button onClick={this.generateHint.bind(this)}>
+      <button type="button" className="hint-button" onClick={this.generateHint.bind(this)}>
         Get Hint
       </button>
     )
